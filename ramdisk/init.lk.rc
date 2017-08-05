@@ -1,0 +1,171 @@
+# Thanks Joe Maples <joe@frap129.org> ~~!
+
+on property:sys.boot_completed=1
+    # Set I/O Scheduler
+    write /sys/block/sda/queue/scheduler maple 
+
+    # Set Swappiness
+    write /proc/sys/vm/swappiness 80
+
+    # Set ReadAhead
+    write /sys/block/sda/queue/read_ahead_kb 128
+
+    # disable iostats
+    write /sys/block/sda/queue/iostats 0
+	
+    # backlight dimmer
+    write /sys/module/mdss_fb/parameters/backlight_dimmer 1
+	
+    chown system.system /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
+    chmod 0664 /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
+    chown system.system /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
+    chmod 0664 /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
+
+    chown system.system /sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq
+    chmod 0664 /sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq
+    chown system.system /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq
+    chmod 0664 /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq
+
+    chown system.system /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+    chmod 0664 /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+
+    chown system.system /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor
+    chmod 0664 /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor
+
+    #cpu
+    write /sys/kernel/cpu_input_boost/ib_freqs "1248000 1344000"
+    write /sys/kernel/cpu_input_boost/ib_duration_ms 1400
+    write /sys/kernel/cpu_input_boost/enabled 1
+
+    # cpufreq
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq 300000
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq 1555200
+    write /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq 300000
+    write /sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq 1958400
+
+    # Configure governor settings for little cluster
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor "nightmare"
+    write /sys/devices/system/cpu/cpu0/cpufreq/nightmare/freq_for_responsiveness 1036800
+    write /sys/devices/system/cpu/cpu0/cpufreq/nightmare/freq_for_responsiveness_max 1555200
+
+    # Configure governor settings for big cluster
+    write /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor "nightmare"
+    write /sys/devices/system/cpu/cpu4/cpufreq/nightmare/freq_for_responsiveness 1267200
+    write /sys/devices/system/cpu/cpu4/cpufreq/nightmare/freq_for_responsiveness_max 1958400
+
+    # Configure governor settings for little cluster
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor "alucard"
+    write /sys/devices/system/cpu/cpu0/cpufreq/alucard/freq_responsiveness 1036800
+    write /sys/devices/system/cpu/cpu0/cpufreq/alucard/freq_responsiveness_max 1555200
+
+    # Configure governor settings for big cluster
+    write /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor "alucard"
+    write /sys/devices/system/cpu/cpu4/cpufreq/alucard/freq_responsiveness 1267200
+    write /sys/devices/system/cpu/cpu4/cpufreq/alucard/freq_responsiveness_max 1958400
+
+    # Configure governor settings for little cluster
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor "cultivation"
+    write /sys/devices/system/cpu/cpu0/cpufreq/cultivation/above_hispeed_delay 19000
+    write /sys/devices/system/cpu/cpu0/cpufreq/cultivation/go_hispeed_load 70
+    write /sys/devices/system/cpu/cpu0/cpufreq/cultivation/fastlane 1
+    write /sys/devices/system/cpu/cpu0/cpufreq/cultivation/fastlane_threshold 40
+    write /sys/devices/system/cpu/cpu0/cpufreq/cultivation/timer_rate 20000
+    write /sys/devices/system/cpu/cpu0/cpufreq/cultivation/hispeed_freq 1036800
+    write /sys/devices/system/cpu/cpu0/cpufreq/cultivation/io_is_busy 1
+    write /sys/devices/system/cpu/cpu0/cpufreq/cultivation/target_loads "85 1100000:31 1200000:45 1300000:66 1400000:93"
+    write /sys/devices/system/cpu/cpu0/cpufreq/cultivation/min_sample_time 40000
+    write /sys/devices/system/cpu/cpu0/cpufreq/cultivation/max_freq_hysteresis 100000
+
+    # Configure governor settings for big cluster
+    write /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor "cultivation"
+    write /sys/devices/system/cpu/cpu4/cpufreq/cultivation/above_hispeed_delay 19000
+    write /sys/devices/system/cpu/cpu4/cpufreq/cultivation/go_hispeed_load 70
+    write /sys/devices/system/cpu/cpu4/cpufreq/cultivation/fastlane 1
+    write /sys/devices/system/cpu/cpu4/cpufreq/cultivation/fastlane_threshold 40
+    write /sys/devices/system/cpu/cpu4/cpufreq/cultivation/timer_rate 20000
+    write /sys/devices/system/cpu/cpu4/cpufreq/cultivation/hispeed_freq 1190400
+    write /sys/devices/system/cpu/cpu4/cpufreq/cultivation/io_is_busy 1
+    write /sys/devices/system/cpu/cpu4/cpufreq/cultivation/target_loads "87 1400000:31 1600000:45 1800000:66 1900000:93"
+    write /sys/devices/system/cpu/cpu4/cpufreq/cultivation/min_sample_time 40000
+    write /sys/devices/system/cpu/cpu4/cpufreq/cultivation/max_freq_hysteresis 100000
+
+    # Configure governor settings for little cluster
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor "impulse"
+    write /sys/devices/system/cpu/cpu0/cpufreq/impulse/above_hispeed_delay 19000
+    write /sys/devices/system/cpu/cpu0/cpufreq/impulse/go_hispeed_load 70
+    write /sys/devices/system/cpu/cpu0/cpufreq/impulse/timer_rate 20000
+    write /sys/devices/system/cpu/cpu0/cpufreq/impulse/hispeed_freq 1036800
+    write /sys/devices/system/cpu/cpu0/cpufreq/impulse/io_is_busy 1
+    write /sys/devices/system/cpu/cpu0/cpufreq/impulse/target_loads "85 1100000:31 1200000:45 1300000:66 1400000:93"
+    write /sys/devices/system/cpu/cpu0/cpufreq/impulse/min_sample_time 40000
+    write /sys/devices/system/cpu/cpu0/cpufreq/impulse/max_freq_hysteresis 100000
+
+    # Configure governor settings for big cluster
+    write /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor "impulse"
+    write /sys/devices/system/cpu/cpu4/cpufreq/impulse/above_hispeed_delay 19000
+    write /sys/devices/system/cpu/cpu4/cpufreq/impulse/go_hispeed_load 70
+    write /sys/devices/system/cpu/cpu4/cpufreq/impulse/timer_rate 20000
+    write /sys/devices/system/cpu/cpu4/cpufreq/impulse/hispeed_freq 1190400
+    write /sys/devices/system/cpu/cpu4/cpufreq/impulse/io_is_busy 1
+    write /sys/devices/system/cpu/cpu4/cpufreq/impulse/target_loads "87 1400000:31 1600000:45 1800000:66 1900000:93"
+    write /sys/devices/system/cpu/cpu4/cpufreq/impulse/min_sample_time 40000
+    write /sys/devices/system/cpu/cpu4/cpufreq/impulse/max_freq_hysteresis 100000		
+	
+    # Configure governor settings for little cluster
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor "blu_active"
+    write /sys/devices/system/cpu/cpu0/cpufreq/blu_active/above_hispeed_delay 19000
+    write /sys/devices/system/cpu/cpu0/cpufreq/blu_active/go_hispeed_load 90
+    write /sys/devices/system/cpu/cpu0/cpufreq/blu_active/timer_rate 20000
+    write /sys/devices/system/cpu/cpu0/cpufreq/blu_active/hispeed_freq 960000
+    write /sys/devices/system/cpu/cpu0/cpufreq/blu_active/io_is_busy 0
+    write /sys/devices/system/cpu/cpu0/cpufreq/blu_active/align_windows 1
+    write /sys/devices/system/cpu/cpu0/cpufreq/blu_active/target_loads 80
+    write /sys/devices/system/cpu/cpu0/cpufreq/blu_active/min_sample_time 80000
+    write /sys/devices/system/cpu/cpu0/cpufreq/blu_active/timer_slack 20000
+    write /sys/devices/system/cpu/cpu0/cpufreq/blu_active/fastlane 1
+    write /sys/devices/system/cpu/cpu0/cpufreq/blu_active/fastlane_threshold 40
+
+    # Configure governor settings for big cluster
+    write /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor "blu_active"
+    write /sys/devices/system/cpu/cpu4/cpufreq/blu_active/above_hispeed_delay 19000
+    write /sys/devices/system/cpu/cpu4/cpufreq/blu_active/go_hispeed_load 90
+    write /sys/devices/system/cpu/cpu4/cpufreq/blu_active/timer_rate 20000
+    write /sys/devices/system/cpu/cpu4/cpufreq/blu_active/hispeed_freq 1267200
+    write /sys/devices/system/cpu/cpu4/cpufreq/blu_active/io_is_busy 0
+    write /sys/devices/system/cpu/cpu4/cpufreq/blu_active/align_windows 1
+    write /sys/devices/system/cpu/cpu4/cpufreq/blu_active/target_loads 85
+    write /sys/devices/system/cpu/cpu4/cpufreq/blu_active/min_sample_time 80000
+    write /sys/devices/system/cpu/cpu4/cpufreq/blu_active/timer_slack 20000
+    write /sys/devices/system/cpu/cpu4/cpufreq/blu_active/fastlane 1
+    write /sys/devices/system/cpu/cpu4/cpufreq/blu_active/fastlane_threshold 40
+	
+
+    # Configure governor settings for little cluster
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor "interactive"
+    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/use_sched_load 1
+    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/use_migration_notif 1
+    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/above_hispeed_delay 19000
+    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/go_hispeed_load 70
+    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/timer_rate 20000
+    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/hispeed_freq 1248000
+    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/io_is_busy 1
+    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/target_loads "85 1100000:31 1200000:45 1300000:66 1400000:93"
+    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/min_sample_time 40000
+    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/max_freq_hysteresis 100000
+    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/ignore_hispeed_on_notif 1
+    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/enable_prediction 1
+
+    # Configure governor settings for big cluster
+    write /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor "interactive"
+    write /sys/devices/system/cpu/cpu4/cpufreq/interactive/use_sched_load 1
+    write /sys/devices/system/cpu/cpu4/cpufreq/interactive/use_migration_notif 1
+    write /sys/devices/system/cpu/cpu4/cpufreq/interactive/above_hispeed_delay 19000
+    write /sys/devices/system/cpu/cpu4/cpufreq/interactive/go_hispeed_load 70
+    write /sys/devices/system/cpu/cpu4/cpufreq/interactive/timer_rate 20000
+    write /sys/devices/system/cpu/cpu4/cpufreq/interactive/hispeed_freq 1420800
+    write /sys/devices/system/cpu/cpu4/cpufreq/interactive/io_is_busy 1
+    write /sys/devices/system/cpu/cpu4/cpufreq/interactive/target_loads "87 1400000:31 1600000:45 1800000:66 1900000:93"
+    write /sys/devices/system/cpu/cpu4/cpufreq/interactive/min_sample_time 40000
+    write /sys/devices/system/cpu/cpu4/cpufreq/interactive/max_freq_hysteresis 100000
+    write /sys/devices/system/cpu/cpu4/cpufreq/interactive/ignore_hispeed_on_notif 1
+    write /sys/devices/system/cpu/cpu4/cpufreq/interactive/enable_prediction 1
